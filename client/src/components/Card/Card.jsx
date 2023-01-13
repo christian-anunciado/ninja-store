@@ -3,17 +3,18 @@ import "./Card.scss"
 import { Link } from 'react-router-dom'
 
 function Card({ item }) {
+    console.log(`${process.env.REACT_APP_API_UPLOADURL}${item.img2?.data?.attributes?.url || ''}`);
     return (
         <Link to={`/product/${item.id}`} className='link'>
             <div className="card">
                 <div className="image">
                     {item.isNew && <span>New Arrival</span>}
-                    <img src={item.img} alt="" className="mainImg" />
-                    <img src={item.img2} alt="" className="secondImg" />
+                    <img src={`${process.env.REACT_APP_API_UPLOADURL}${item.img?.data?.attributes?.url}`} alt="" className="mainImg" />
+                    <img src={`${process.env.REACT_APP_API_UPLOADURL}${item.img2?.data?.attributes?.url || ''}`} alt="" className="secondImg" />
                 </div>
                 <h2>{item.title}</h2>
                 <div className="prices">
-                    <h3 className='oldPrice'>${item.oldPrice}</h3>
+                    <h3 className='oldPrice'>${item.oldPrice || item.price + 20}</h3>
                     <h3>${item.price}</h3>
                 </div>
             </div>
