@@ -12,7 +12,7 @@ function Contact() {
         <div className="contact">
             <div className="wrapper">
                 <div className="item">
-                    <span>Be in touch with us.</span>
+                    <p>Be in <span>touch</span> with us.</p>
                 </div>
                 <div className="item">
                     <input type="text" name="email" placeholder='Enter your email' />
