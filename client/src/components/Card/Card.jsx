@@ -3,7 +3,6 @@ import "./Card.scss"
 import { Link } from 'react-router-dom'
 
 function Card({ item }) {
-    console.log(`${process.env.REACT_APP_API_UPLOADURL}${item.img2?.data?.attributes?.url || ''}`);
     return (
         <Link to={`/product/${item.id}`} className='link'>
             <div className="card">
