@@ -25,6 +25,7 @@
             width: 80px;
             height: 100px;
             object-fit: cover;
+            cursor: pointer;
         }
 
         .details {
@@ -81,6 +82,7 @@
             color: rgba(255, 0, 0, 0.5);
             font-size: 0.675rem;
             font-weight: 500;
+            cursor: pointer;
         }
     }
 }

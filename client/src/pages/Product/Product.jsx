@@ -4,79 +4,102 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BalanceIcon from '@mui/icons-material/Balance';
 
 import "./Product.scss"
+import { useParams } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../redux/cartRedux';
 
 function Product() {
 
-    const [selectedImg, setselectedImg] = useState(0)
+    const [selectedImg, setselectedImg] = useState('img')
     const [quantity, setQuantity] = useState(1)
+    const prodID = useParams().id
 
-    const images = [
-        "https://images.pexels.com/photos/10026491/pexels-photo-10026491.png?auto=compress&cs=tinysrgb&w=1600&dpr=1",
-        "https://images.pexels.com/photos/12179283/pexels-photo-12179283.jpeg?auto=compress&cs=tinysrgb&w=1600&dpr=1"
-    ]
+    const { data, loading, error } = useFetch(`/products/${prodID}?populate=*`)
+
+    const dispatch = useDispatch()
+
+
+    const handleAdd = () => {
+        console.log("Clicked");
+        dispatch(addToCart({
+            id: data.data.id,
+            title: data.data.attributes.title,
+            desc: data.data.attributes.desc,
+            price: data.data.attributes.price,
+            img: data.data.attributes.img.data.attributes.url,
+            quantity
+        }))
+    }
 
     return (
         <div className="product">
-            <div className="left">
-                <div className="images">
-                    {images?.map((item, index) => {
-                        return (
-                            <img src={item} alt="" key={item} onClick={(e) => setselectedImg(index)} />
-                        )
-                    }
-                    )}
-                </div>
+            {loading
+                ? "Loading"
+                : <>
+                    <div className="left">
+                        <div className="images">
+                            <img src={`${process.env.REACT_APP_API_UPLOADURL}${data?.data?.attributes?.img?.data?.attributes?.url}`} alt="" onClick={(e) => setselectedImg('img')} />
+                            {data?.data?.attributes?.img2?.data?.attributes?.url
+                                ? <img src={`${process.env.REACT_APP_API_UPLOADURL}${data?.data?.attributes?.img2?.data?.attributes?.url}`} alt="" onClick={(e) => setselectedImg('img2')} />
+                                : null
+                            }
 
-                <div className="mainImg">
-                    <img src={images[selectedImg]} alt="" />
-                </div>
-            </div>
+                        </div>
 
-            <div className="right">
-                <h1>Title</h1>
-                <span className='price'>$199</span>
-                <p>
-                    Velit eiusmod est eu aliqua irure tempor in sint ut proident tempor dolore labore reprehenderit. Voluptate non sint ipsum excepteur cupidatat exercitation voluptate voluptate id duis anim officia. Ad non cupidatat ea in quis esse et aliqua elit veniam tempor deserunt consectetur. Dolore esse esse ipsum ex sunt voluptate minim cillum enim dolore minim. Elit eiusmod ut veniam duis cillum aute reprehenderit incididunt nisi tempor nisi. Aute ut duis in nulla nisi deserunt veniam ad cupidatat.
-                </p>
-
-                <div className="quantity">
-                    <button onClick={(e) => setQuantity(prev => (prev === 1 ? 1 : prev = 1))}>-</button>
-                    {quantity}
-                    <button onClick={(e) => setQuantity(prev => prev + 1)}>+</button>
-                </div>
-
-                <button className='add'>
-                    <AddShoppingCartIcon /> ADD TO CART
-                </button>
-
-                <div className="buttons">
-                    <div className="items">
-                        <FavoriteBorderIcon /> ADD TO WISH LIST
+                        <div className="mainImg">
+                            <img src={process.env.REACT_APP_API_UPLOADURL + data?.data?.attributes[selectedImg]?.data?.attributes?.url} alt="" />
+                        </div>
                     </div>
 
-                    <div className="items">
-                        <BalanceIcon /> ADD TO COMPARE
+                    <div className="right">
+                        <h1>{data.data.attributes.title}</h1>
+                        <span className='price'>${data.data.attributes.price}</span>
+                        <p>
+                            {data.data.attributes.desc}
+                        </p>
+
+                        <div className="quantity">
+                            <button onClick={(e) => setQuantity(prev => (prev === 1 ? 1 : prev = 1))}>-</button>
+                            {quantity}
+                            <button onClick={(e) => setQuantity(prev => prev + 1)}>+</button>
+                        </div>
+
+                        <button className='add' onClick={handleAdd}>
+                            <AddShoppingCartIcon /> ADD TO CART
+                        </button>
+
+                        <div className="buttons">
+                            <div className="items">
+                                <FavoriteBorderIcon /> ADD TO WISH LIST
+                            </div>
+
+                            <div className="items">
+                                <BalanceIcon /> ADD TO COMPARE
+                            </div>
+                        </div>
+
+                        <div className="info">
+                            <span>Vendor: Polo</span>
+                            <span>Product Type: T-Shirt</span>
+                            <span>Tag: T-Shirt, Women, Top</span>
+
+                        </div>
+
+                        <hr />
+
+                        <div className="details">
+                            <span>DESCRIPTION</span>
+                            <hr />
+                            <span>ADDITIONAL INFORMATION</span>
+                            <hr />
+                            <span>FAQ</span>
+                        </div>
+
                     </div>
-                </div>
+                </>
+            }
 
-                <div className="info">
-                    <span>Vendor: Polo</span>
-                    <span>Product Type: T-Shirt</span>
-                    <span>Tag: T-Shirt, Women, Top</span>
-
-                </div>
-
-                <hr />
-
-                <div className="details">
-                    <span>DESCRIPTION</span>
-                    <hr />
-                    <span>ADDITIONAL INFORMATION</span>
-                    <hr />
-                    <span>FAQ</span>
-                </div>
-
-            </div>
 
 
         </div>
