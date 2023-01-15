@@ -18,7 +18,7 @@ function List({ catID, price, sort, subCat }) {
             {loading
                 ? "Loading"
                 : data?.data?.map(items =>
-                    <Card item={items.attributes} key={items.id} />
+                    <Card item={items.attributes} key={items.id} id={items.id} />
                 )}
         </div>
     )

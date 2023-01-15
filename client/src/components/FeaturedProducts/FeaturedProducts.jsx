@@ -20,7 +20,7 @@ function FeaturedProducts({ type }) {
                 {error ? 'Something went wrong!' :
                     loading ? 'Loading' :
                         data.data?.map(item =>
-                            <Card item={item.attributes} key={item.id} />
+                            <Card item={item.attributes} key={item.id} id={item.id} />
                         )}
             </div>
         </div>

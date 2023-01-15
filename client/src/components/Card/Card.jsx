@@ -2,9 +2,9 @@ import React from 'react'
 import "./Card.scss"
 import { Link } from 'react-router-dom'
 
-function Card({ item }) {
+function Card({ item, id }) {
     return (
-        <Link to={`/product/${item.id}`} className='link'>
+        <Link to={`/product/${id}`} className='link'>
             <div className="card">
                 <div className="image">
                     {item.isNew && <span>New Arrival</span>}
