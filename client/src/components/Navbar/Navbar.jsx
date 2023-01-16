@@ -28,7 +28,7 @@ function Navbar() {
                         <span>USD</span>
                         <KeyboardArrowDownIcon />
                     </div>
-                    <div className="item">
+                    {/* <div className="item">
                         <Link className='link' to="/products/1">Women</Link>
                     </div>
                     <div className="item">
@@ -36,7 +36,7 @@ function Navbar() {
                     </div>
                     <div className="item">
                         <Link className='link' to="/products/3">Children</Link>
-                    </div>
+                    </div> */}
 
                 </div>
 
@@ -48,7 +48,7 @@ function Navbar() {
 
                 <div className="right">
 
-                    <div className="item">
+                    {/* <div className="item">
                         <Link className='link' to="/">Homepage</Link>
                     </div>
                     <div className="item">
@@ -59,9 +59,9 @@ function Navbar() {
                     </div>
                     <div className="item">
                         <Link className='link' to="/">Stores</Link>
-                    </div>
+                    </div> */}
                     <div className="icons">
-                        <SearchIcon />
+                        {/* <SearchIcon /> */}
                         <PersonOutlineIcon />
                         <FavoriteIcon />
                         <div className="cartIcon" onClick={() => setOpenCart(!openCart)}>
