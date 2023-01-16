@@ -1,44 +1,85 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import './Cart.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { removeToCart, resetCart } from '../../redux/cartRedux';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 function Cart() {
 
     const products = useSelector(state => state.cart.products)
 
+    const [imageLoading, setImageLoading] = useState(false)
+    const [imageLoaded, setImageLoaded] = useState(0)
+
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
-    const total = () => {
-        let total = 0;
+    const totalQuantity = products.reduce((prev, current) => {
+        return prev += current.quantity
+    }, 0)
 
-        products.map(item => total += item.quantity * item.price)
+    const totalPrice = products.reduce((prev, current) => {
+        return prev += current.quantity * current.price
+    }, 0.0)
 
-        return total.toFixed(2)
+    const handleImageLoading = () => {
+        setImageLoaded(prev => prev + 1)
     }
+
+    useEffect(() => {
+        if (imageLoaded === products.length) {
+            setImageLoading(true)
+        }
+    }, [imageLoaded])
+
+
 
 
     return (
         <div className="cart">
-            <h1>
-                Products in your cart
-            </h1>
+            <div className="headingTitle">
+                <h1>
+                    Your Cart
+                </h1>
+                <span>{totalQuantity} items</span>
+            </div>
 
-            {products?.map(item => (
-                <div className="item" key={item.id}>
-                    <img src={process.env.REACT_APP_API_UPLOADURL + item.img} alt="" onClick={() => navigate(`/product/${item.id}`)} />
+            <hr />
+
+            {products?.map((item, index) => (
+                <div className="item" key={item.id} >
+
+                    <div style={{ display: imageLoading ? 'none' : 'block' }}>
+                        <Loading
+                            height={'100px'}
+                            width={'80px'}
+                            color={'#000'}
+                            loadingHeight={'18px'}
+                            loadingWidth={'18px'}
+                        />
+                    </div>
+
+
+                    <img
+                        src={process.env.REACT_APP_API_UPLOADURL + item.img}
+                        alt=""
+                        onClick={() => navigate(`/product/${item.id}`)}
+                        loading="lazy"
+                        onLoad={handleImageLoading}
+                        onError={handleImageLoading}
+                        style={{ display: imageLoading ? 'block' : 'none' }}
+                    />
 
                     <div className="details">
                         <h1>{item.title}</h1>
                         <p>{item.desc?.substring(0, 100)}</p>
-                        <span className="price">
-                            {item.quantity} x ${item.price}
-                        </span>
+                        <p className="price">
+                            {item.quantity} x <span className='currency'>$</span>{item.price.toFixed(2)}
+                        </p>
                     </div>
 
                     <div className="delete" onClick={() => dispatch(removeToCart(
@@ -49,10 +90,10 @@ function Cart() {
                 </div>
             ))
             }
-
+            <hr />
             <div className="total">
-                <span>SUBTOTAL</span>
-                <span>{total()}</span>
+                <p>SUBTOTAL</p>
+                <p className='totalPrice'><span className='currency'>$</span>{totalPrice.toFixed(2)}</p>
             </div>
 
             <div className="checkout">

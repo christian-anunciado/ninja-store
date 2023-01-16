@@ -60,7 +60,7 @@ function Product() {
                         </p>
 
                         <div className="quantity">
-                            <button onClick={(e) => setQuantity(prev => (prev === 1 ? 1 : prev = 1))}>-</button>
+                            <button onClick={(e) => setQuantity(prev => (prev === 1 ? 1 : prev - 1))}>-</button>
                             {quantity}
                             <button onClick={(e) => setQuantity(prev => prev + 1)}>+</button>
                         </div>

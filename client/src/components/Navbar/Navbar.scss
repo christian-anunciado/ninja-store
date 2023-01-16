@@ -1,5 +1,9 @@
 .navbar {
-    height: 80px;
+    position: sticky;
+    top: 0px;
+    z-index: 999999;
+    width: 100%;
+    background-color: white;
 
     .wrapper {
         margin-top: 6px;
