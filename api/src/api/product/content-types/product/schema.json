@@ -66,6 +66,9 @@
         "featured",
         "trending"
       ]
+    },
+    "photo": {
+      "type": "string"
     }
   }
 }
