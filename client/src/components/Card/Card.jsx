@@ -8,8 +8,8 @@ function Card({ item, id }) {
             <div className="card">
                 <div className="image">
                     {item.isNew && <span>New Arrival</span>}
-                    <img src={`${process.env.REACT_APP_API_UPLOADURL}${item.img?.data?.attributes?.url}`} alt="" className="mainImg" />
-                    <img src={`${process.env.REACT_APP_API_UPLOADURL}${item.img2?.data?.attributes?.url || ''}`} alt="" className="secondImg" />
+                    <img src={`${process.env.REACT_APP_API_UPLOADURL}${item.img?.data?.attributes?.url}`} alt="" className="mainImg" loading='lazy' />
+                    <img src={`${process.env.REACT_APP_API_UPLOADURL}${item.img2?.data?.attributes?.url || ''}`} alt="" className="secondImg" loading='lazy' />
                 </div>
                 <h2>{item.title}</h2>
                 <div className="prices">

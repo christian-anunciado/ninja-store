@@ -6,7 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeToCart, resetCart } from '../../redux/cartRedux';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading/Loading';
+import { loadStripe } from '@stripe/stripe-js';
+import Api from '../../Api';
 
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 function Cart() {
 
     const products = useSelector(state => state.cart.products)
@@ -36,7 +41,23 @@ function Cart() {
         }
     }, [imageLoaded])
 
+    const handleCheckout = async () => {
+        try {
+            const stripe = await stripePromise;
 
+            const res = await Api.post("/orders", {
+                products
+            })
+
+            stripe.redirectToCheckout({
+                sessionId: res.data.stripeSession.id,
+            })
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
     return (
@@ -97,7 +118,7 @@ function Cart() {
             </div>
 
             <div className="checkout">
-                <button>
+                <button onClick={handleCheckout}>
                     PROCEED TO CHECKOUT
                 </button>
 
