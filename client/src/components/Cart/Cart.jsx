@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import './Cart.scss'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import { loadStripe } from '@stripe/stripe-js';
 import Api from '../../Api';
+import { CurrencyContext } from '../../context/currencyContext';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -18,6 +19,8 @@ function Cart() {
 
     const [imageLoading, setImageLoading] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(0)
+
+    const { convertedPrice, currency, unitPrice } = useContext(CurrencyContext)
 
     const dispatch = useDispatch()
 
@@ -46,7 +49,9 @@ function Cart() {
             const stripe = await stripePromise;
 
             const res = await Api.post("/orders", {
-                products
+                products: products.map(item => ({
+                    ...item, price: convertedPrice(item.price), currency: currency.toLowerCase()
+                }))
             })
 
             stripe.redirectToCheckout({
@@ -99,7 +104,7 @@ function Cart() {
                         <h1>{item.title}</h1>
                         <p>{item.desc?.substring(0, 100)}</p>
                         <p className="price">
-                            {item.quantity} x <span className='currency'>$</span>{item.price.toFixed(2)}
+                            {item.quantity} x {unitPrice(item.price)}
                         </p>
                     </div>
 
@@ -114,7 +119,7 @@ function Cart() {
             <hr />
             <div className="total">
                 <p>SUBTOTAL</p>
-                <p className='totalPrice'><span className='currency'>$</span>{totalPrice.toFixed(2)}</p>
+                <p className='totalPrice'>{unitPrice(totalPrice)}</p>
             </div>
 
             <div className="checkout">

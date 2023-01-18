@@ -6,9 +6,9 @@
  * order controller
 */
 
+// const fetch = require('node-fetch');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createCoreController } = require('@strapi/strapi').factories;
-
 
 
 module.exports = createCoreController(
@@ -16,6 +16,8 @@ module.exports = createCoreController(
     ({ strapi }) => ({
         async create(ctx) {
             const { products } = ctx.request.body;
+
+            // const amount = req.data.data[`${products[0].currency}`]
 
             const lineItems = await Promise.all(
                 products.map(async (product) => {
@@ -26,12 +28,12 @@ module.exports = createCoreController(
 
                     return {
                         price_data: {
-                            currency: "usd",
+                            currency: product.currency,
                             product_data: {
                                 name: item.title,
                                 images: [item.photo],
                             },
-                            unit_amount: item.price * 100,
+                            unit_amount: product.price * 100,
                         },
                         quantity: product.quantity,
                     };
