@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./Card.scss"
 import { Link } from 'react-router-dom'
+import { CurrencyContext } from '../../context/currencyContext'
 
 function Card({ item, id }) {
+    const { unitPrice } = useContext(CurrencyContext)
+
     return (
         <Link to={`/product/${id}`} className='link'>
             <div className="card">
@@ -13,8 +16,8 @@ function Card({ item, id }) {
                 </div>
                 <h2>{item.title}</h2>
                 <div className="prices">
-                    <h3 className='oldPrice'>${item.oldPrice || item.price + 20}</h3>
-                    <h3>${item.price}</h3>
+                    <h3 className='oldPrice'>{unitPrice(item.oldPrice || item.price + 20)}</h3>
+                    <h3>{unitPrice(item.price)}</h3>
                 </div>
             </div>
         </Link>

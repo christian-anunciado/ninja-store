@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import SearchIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteIcon from '@mui/icons-material/FavoriteOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -8,11 +7,31 @@ import { Link } from 'react-router-dom';
 import "./Navbar.scss"
 import Cart from '../Cart/Cart';
 import { useSelector } from 'react-redux';
+import { Menu, MenuItem } from '@mui/material';
+import { useContext } from 'react';
+import { CurrencyContext } from '../../context/currencyContext';
 
 
 function Navbar() {
     const [openCart, setOpenCart] = useState(false)
     const products = useSelector(state => state.cart.products)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        console.log(event.currentTarget);
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = (e) => {
+        setAnchorEl(null);
+        const curr = e.currentTarget.textContent
+        changeCurrency((prev) => {
+
+            return curr ? curr : prev
+
+        })
+    };
+    const { changeCurrency, unitPrice, currency } = useContext(CurrencyContext)
+
 
     return (
         <div className="navbar">
@@ -24,10 +43,36 @@ function Navbar() {
                         <img src="/img/en.png" alt="" />
                         <KeyboardArrowDownIcon />
                     </div>
-                    <div className="item">
-                        <span>USD</span>
+                    <div className="item menu-currency" id='menu-currency' onClick={handleClick} aria-controls={open ? 'demo-positioned-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}>
+                        <span>{currency}</span>
                         <KeyboardArrowDownIcon />
                     </div>
+                    <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="menu-currency"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        style={{
+                            zIndex: '99999999'
+                        }}
+                    >
+                        <MenuItem onClick={handleClose}>USD</MenuItem>
+                        <MenuItem onClick={handleClose}>PHP</MenuItem>
+                        <MenuItem onClick={handleClose}>AUD</MenuItem>
+                        <MenuItem onClick={handleClose}>JPY</MenuItem>
+                    </Menu>
+
                     {/* <div className="item">
                         <Link className='link' to="/products/1">Women</Link>
                     </div>
