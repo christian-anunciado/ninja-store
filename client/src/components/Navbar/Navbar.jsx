@@ -10,15 +10,22 @@ import { useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@mui/material';
 import { useContext } from 'react';
 import { CurrencyContext } from '../../context/currencyContext';
+import { useRef } from 'react';
 
 
 function Navbar() {
     const [openCart, setOpenCart] = useState(false)
+
     const products = useSelector(state => state.cart.products)
+
     const [anchorEl, setAnchorEl] = useState(null);
+
     const open = Boolean(anchorEl);
+
+
+
+
     const handleClick = (event) => {
-        console.log(event.currentTarget);
         setAnchorEl(event.currentTarget);
     };
     const handleClose = (e) => {
@@ -119,7 +126,7 @@ function Navbar() {
 
             </div>
 
-            {openCart && <Cart />}
+            {openCart && <Cart setToggle={setOpenCart} />}
         </div>
     )
 }

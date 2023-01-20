@@ -5,13 +5,9 @@ import './List.scss'
 
 function List({ catID, price, sort, subCat }) {
 
-    console.log(price, subCat, sort);
-
     const { data, loading, error } = useFetch(
         `/products?populate=*&filters[categories][title]=${catID}${subCat.map(item => `&filters[subcategories][id][$eq]=${item}`)}&filters[price][$lte]=${price}&sort=price:${sort}`
     )
-
-    console.log(data);
 
     return (
         <div className="list">

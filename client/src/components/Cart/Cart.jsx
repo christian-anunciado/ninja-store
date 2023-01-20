@@ -1,24 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import './Cart.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeToCart, resetCart } from '../../redux/cartRedux';
+import { removeToCart, resetCart, updateQuantity } from '../../redux/cartRedux';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 import { loadStripe } from '@stripe/stripe-js';
 import Api from '../../Api';
 import { CurrencyContext } from '../../context/currencyContext';
+import useOutsideClick from '../../hooks/useOutsideClick';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-function Cart() {
+
+function Cart({ setToggle }) {
 
     const products = useSelector(state => state.cart.products)
 
     const [imageLoading, setImageLoading] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(0)
+    const wrapperRef = useRef()
 
     const { convertedPrice, currency, unitPrice } = useContext(CurrencyContext)
 
@@ -28,11 +31,11 @@ function Cart() {
 
     const totalQuantity = products.reduce((prev, current) => {
         return prev += current.quantity
-    }, 0)
+    }, 0) || 0
 
     const totalPrice = products.reduce((prev, current) => {
         return prev += current.quantity * current.price
-    }, 0.0)
+    }, 0.0) || 0
 
     const handleImageLoading = () => {
         setImageLoaded(prev => prev + 1)
@@ -43,6 +46,8 @@ function Cart() {
             setImageLoading(true)
         }
     }, [imageLoaded])
+
+    useOutsideClick(wrapperRef, setToggle)
 
     const handleCheckout = async () => {
         try {
@@ -64,9 +69,8 @@ function Cart() {
         }
     }
 
-
     return (
-        <div className="cart">
+        <div className="cart" ref={wrapperRef}>
             <div className="headingTitle">
                 <h1>
                     Your Cart
@@ -106,6 +110,24 @@ function Cart() {
                         <p className="price">
                             {item.quantity} x {unitPrice(item.price)}
                         </p>
+                        <div className="quantity">
+                            <button
+                                onClick={(e) => dispatch(updateQuantity({
+                                    id: item.id,
+                                    quantity: item.quantity === 1 ? 1 : item.quantity - 1
+                                }))}
+                            >
+                                -
+                            </button>
+                            {item.quantity}
+                            <button onClick={(e) => dispatch(updateQuantity({
+                                id: item.id,
+                                quantity: item.quantity + 1
+                            }))}
+                            >
+                                +
+                            </button>
+                        </div>
                     </div>
 
                     <div className="delete" onClick={() => dispatch(removeToCart(

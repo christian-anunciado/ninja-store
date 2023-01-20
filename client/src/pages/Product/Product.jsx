@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BalanceIcon from '@mui/icons-material/Balance';
@@ -8,12 +8,14 @@ import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/cartRedux';
+import { CurrencyContext } from '../../context/currencyContext';
 
 function Product() {
 
     const [selectedImg, setselectedImg] = useState('img')
     const [quantity, setQuantity] = useState(1)
     const prodID = useParams().id
+    const { unitPrice } = useContext(CurrencyContext)
 
     const { data, loading, error } = useFetch(`/products/${prodID}?populate=*`)
 
@@ -21,7 +23,6 @@ function Product() {
 
 
     const handleAdd = () => {
-        console.log("Clicked");
         dispatch(addToCart({
             id: data.data.id,
             title: data.data.attributes.title,
@@ -54,7 +55,7 @@ function Product() {
 
                     <div className="right">
                         <h1>{data.data.attributes.title}</h1>
-                        <span className='price'>${data.data.attributes.price}</span>
+                        <span className='price'>{unitPrice(data.data.attributes.price)}</span>
                         <p>
                             {data.data.attributes.desc}
                         </p>
