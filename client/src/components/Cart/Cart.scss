@@ -16,6 +16,7 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 20px;
+        position: relative;
 
         h1 {
             color: rgb(24, 24, 24);
@@ -27,7 +28,9 @@
             font-size: 0.8rem;
             font-weight: 300;
             color: gray;
+
         }
+
     }
 
     hr {
@@ -70,6 +73,18 @@
                 color: #2879fe;
                 font-size: 1rem;
                 font-weight: 500;
+            }
+
+            .quantity {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+
+                button {
+                    border: none;
+                    padding: 2px 8px;
+                    cursor: pointer;
+                }
             }
         }
 

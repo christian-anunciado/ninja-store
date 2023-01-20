@@ -17,7 +17,6 @@ function Slider() {
             if (isVisible) {
                 const timer = setTimeout(() => {
                     nextSlide()
-                    console.log("Running");
                 }, 5000);
                 return () => clearTimeout(timer);
             }
