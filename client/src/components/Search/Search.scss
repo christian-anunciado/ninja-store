@@ -1,0 +1,28 @@
+.search {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+
+    input {
+        border-radius: 4px;
+        animation: sampleTest .8s both;
+        width: 100%;
+
+        &::placeholder {
+            color: gray;
+            font-weight: normal;
+        }
+    }
+}
+
+@keyframes sampleTest {
+    0% {
+        width: 10%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}

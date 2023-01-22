@@ -15,7 +15,7 @@ import useOutsideClick from '../../hooks/useOutsideClick';
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-function Cart({ setToggle }) {
+function Cart({ setToggle, handlerRef }) {
 
     const products = useSelector(state => state.cart.products)
 
@@ -42,12 +42,16 @@ function Cart({ setToggle }) {
     }
 
     useEffect(() => {
+        console.log(imageLoaded === products.length);
         if (imageLoaded === products.length) {
+            console.log("true");
             setImageLoading(true)
         }
     }, [imageLoaded])
 
-    useOutsideClick(wrapperRef, setToggle)
+    console.log(imageLoaded);
+
+    useOutsideClick(wrapperRef, setToggle, handlerRef)
 
     const handleCheckout = async () => {
         try {
