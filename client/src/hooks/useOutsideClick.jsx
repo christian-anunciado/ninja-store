@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 
-function useOutsideClick(ref, setToggle) {
+function useOutsideClick(ref, setToggle, handlerRef) {
     useEffect(() => {
         /**
          * Alert if clicked on outside of element
          */
         function handleClickOutside(event) {
             if (ref.current && !ref.current.contains(event.target)) {
+                if (handlerRef.current && handlerRef.current.contains(event.target)) {
+                    return
+                }
                 setToggle(prev => !prev)
             }
         }

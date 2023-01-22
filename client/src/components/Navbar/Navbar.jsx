@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteIcon from '@mui/icons-material/FavoriteOutlined';
@@ -10,20 +10,19 @@ import { useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@mui/material';
 import { useContext } from 'react';
 import { CurrencyContext } from '../../context/currencyContext';
-import { useRef } from 'react';
+import Search from '../Search/Search';
 
 
 function Navbar() {
     const [openCart, setOpenCart] = useState(false)
+
+    const handlerRef = useRef(null)
 
     const products = useSelector(state => state.cart.products)
 
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
-
-
-
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -38,7 +37,6 @@ function Navbar() {
         })
     };
     const { changeCurrency, unitPrice, currency } = useContext(CurrencyContext)
-
 
     return (
         <div className="navbar">
@@ -114,9 +112,10 @@ function Navbar() {
                     </div> */}
                     <div className="icons">
                         {/* <SearchIcon /> */}
+                        <Search />
                         <PersonOutlineIcon />
                         <FavoriteIcon />
-                        <div className="cartIcon" onClick={() => setOpenCart(!openCart)}>
+                        <div className="cartIcon" onClick={() => setOpenCart(!openCart)} ref={handlerRef}>
                             <ShoppingCartIcon />
                             <span>{products.length}</span>
                         </div>
@@ -126,7 +125,7 @@ function Navbar() {
 
             </div>
 
-            {openCart && <Cart setToggle={setOpenCart} />}
+            {openCart && <Cart setToggle={setOpenCart} handlerRef={handlerRef} />}
         </div>
     )
 }
