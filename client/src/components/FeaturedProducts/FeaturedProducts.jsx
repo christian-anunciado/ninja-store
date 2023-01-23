@@ -3,7 +3,7 @@ import Card from '../Card/Card'
 import "./FeaturedProducts.scss"
 import useFetch from '../../hooks/useFetch'
 
-function FeaturedProducts({ type }) {
+function FeaturedProducts({ type, msg }) {
 
     const { data, loading, error } = useFetch(`/products?populate=*&filters[type][$eq]=${type}`)
 
@@ -15,7 +15,7 @@ function FeaturedProducts({ type }) {
             <div className="top">
                 <h1>{type} products</h1>
                 <span>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dapibus venenatis eleifend. In nec lacus lorem. Sed leo eros, commodo ut porta quis, rutrum sed quam. Donec a ligula non leo aliquet accumsan. Curabitur quis nibh gravida, vestibulum mi ac, varius erat. Duis volutpat et augue non consequat. Sed eget arcu id ipsum sollicitudin suscipit.
+                    {msg}
                 </span>
             </div>
             <div className="bottom">

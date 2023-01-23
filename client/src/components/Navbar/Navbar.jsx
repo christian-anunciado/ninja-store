@@ -21,8 +21,10 @@ function Navbar() {
     const products = useSelector(state => state.cart.products)
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorLanguageEl, setAnchorLanguageEl] = useState(null);
 
     const open = Boolean(anchorEl);
+    const languageOpen = Boolean(anchorLanguageEl);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -44,16 +46,43 @@ function Navbar() {
 
                 <div className="left">
 
-                    <div className="item">
+                    <div className="item" id='menu-language'
+                        onClick={(e) => setAnchorLanguageEl(e.currentTarget)}
+                        aria-controls={languageOpen ? 'menu-language-position' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={languageOpen ? 'true' : undefined}
+                    >
                         <img src="/img/en.png" alt="" />
                         <KeyboardArrowDownIcon />
                     </div>
+
+
                     <div className="item menu-currency" id='menu-currency' onClick={handleClick} aria-controls={open ? 'demo-positioned-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}>
                         <span>{currency}</span>
                         <KeyboardArrowDownIcon />
                     </div>
+                    <Menu
+                        id="menu-language-position"
+                        aria-labelledby="menu-language"
+                        anchorEl={anchorLanguageEl}
+                        open={languageOpen}
+                        onClose={(e) => setAnchorLanguageEl(null)}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        style={{
+                            zIndex: '99999999'
+                        }}
+                    >
+                        <MenuItem disabled>At this time, we are only able to support the English language</MenuItem>
+                    </Menu>
                     <Menu
                         id="demo-positioned-menu"
                         aria-labelledby="menu-currency"
@@ -78,16 +107,6 @@ function Navbar() {
                         <MenuItem onClick={handleClose}>JPY</MenuItem>
                     </Menu>
 
-                    {/* <div className="item">
-                        <Link className='link' to="/products/1">Women</Link>
-                    </div>
-                    <div className="item">
-                        <Link className='link' to="/products/2">Men</Link>
-                    </div>
-                    <div className="item">
-                        <Link className='link' to="/products/3">Children</Link>
-                    </div> */}
-
                 </div>
 
                 <div className="center">
@@ -97,21 +116,7 @@ function Navbar() {
                 </div>
 
                 <div className="right">
-
-                    {/* <div className="item">
-                        <Link className='link' to="/">Homepage</Link>
-                    </div>
-                    <div className="item">
-                        <Link className='link' to="/">About</Link>
-                    </div>
-                    <div className="item">
-                        <Link className='link' to="/">Contact</Link>
-                    </div>
-                    <div className="item">
-                        <Link className='link' to="/">Stores</Link>
-                    </div> */}
                     <div className="icons">
-                        {/* <SearchIcon /> */}
                         <Search />
                         <PersonOutlineIcon />
                         <FavoriteIcon />
