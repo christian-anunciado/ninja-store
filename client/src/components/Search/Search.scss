@@ -7,12 +7,21 @@
 
     input {
         border-radius: 4px;
-        animation: sampleTest .8s both;
+        animation: sampleTest .3s both;
         width: 100%;
+        padding: 2;
 
         &::placeholder {
             color: gray;
             font-weight: normal;
+        }
+
+        &::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+            background-size: contain;
+            opacity: 1;
+            pointer-events: none;
         }
     }
 }
@@ -20,9 +29,11 @@
 @keyframes sampleTest {
     0% {
         width: 10%;
+        opacity: 0;
     }
 
     100% {
         width: 100%;
+        opacity: 1;
     }
 }

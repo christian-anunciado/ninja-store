@@ -25,14 +25,13 @@ function Footer() {
 
                 <div className="item">
                     <h1>About</h1>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dapibus venenatis eleifend. In nec lacus lorem. Sed leo eros, commodo ut porta quis, rutrum sed quam. Donec a ligula non leo aliquet accumsan. Curabitur quis nibh gravida, vestibulum mi ac, varius erat. Duis volutpat et augue non consequat. Sed eget arcu id ipsum sollicitudin suscipit. Quisque justo nisi, dictum tristique orci in, pellentesque aliquet tortor. Vestibulum lacinia dui sed leo sollicitudin, ac accumsan turpis iaculis. Praesent consectetur aliquet massa, id ultricies tellus iaculis sed.
-
+                    <span>Our shop is dedicated to providing customers with a wide range of high-quality products across various categories, from the latest fashion trends to must-have home essentials, all at competitive prices, and with an exceptional shopping experience that is both easy and enjoyable.
                     </span>
                 </div>
 
                 <div className="item">
                     <h1>Contact</h1>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque dapibus venenatis eleifend. In nec lacus lorem. Sed leo eros, commodo ut porta quis, rutrum sed quam. Donec a ligula non leo aliquet accumsan. Curabitur quis nibh gravida, vestibulum mi ac, varius erat. Duis volutpat et augue non consequat. Sed eget arcu id ipsum sollicitudin suscipit. Quisque justo nisi, dictum tristique orci in, pellentesque aliquet tortor. Vestibulum lacinia dui sed leo sollicitudin, ac accumsan turpis iaculis. Praesent consectetur aliquet massa, id ultricies tellus iaculis sed.
+                    <span>If you have any questions or concerns about our products, shipping or returns, please don't hesitate to reach out to our friendly customer service team through our website's contact form, email, live chat or phone, we are available Monday to Friday from 9am to 5pm EST, Our team will be more than happy to assist you and ensure that your shopping experience with us is a positive one.
 
                     </span>
                 </div>
@@ -41,7 +40,7 @@ function Footer() {
             <div className="bottom">
                 <div className="left">
                     <span className="logo">Ninja Store</span>
-                    <span className="copyright">© 2022 - All Rights Reserved.</span>
+                    <span className="copyright">© {new Date().getFullYear()} - All Rights Reserved.</span>
                 </div>
                 <div className="right">
                     <img src="/img/payment.png" alt="" />
