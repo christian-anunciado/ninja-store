@@ -10,6 +10,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import Api from '../../Api';
 import { CurrencyContext } from '../../context/currencyContext';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import { Skeleton } from '@mui/material';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -44,12 +45,10 @@ function Cart({ setToggle, handlerRef }) {
     useEffect(() => {
         console.log(imageLoaded === products.length);
         if (imageLoaded === products.length) {
-            console.log("true");
             setImageLoading(true)
         }
     }, [imageLoaded])
 
-    console.log(imageLoaded);
 
     useOutsideClick(wrapperRef, setToggle, handlerRef)
 
@@ -84,68 +83,135 @@ function Cart({ setToggle, handlerRef }) {
 
             <hr />
 
-            {products?.map((item, index) => (
-                <div className="item" key={item.id} >
+            <div className="item-container">
+                {products?.map((item, index) => (
+                    <div className="item" key={item.id} >
+                        {imageLoading ?
+                            <img
+                                src={process.env.REACT_APP_API_UPLOADURL + item.img}
+                                alt=""
+                                onClick={() => navigate(`/product/${item.id}`)}
+                                loading="lazy"
+                                onLoad={handleImageLoading}
+                                onError={handleImageLoading}
+                            // style={{ display: imageLoading ? 'block' : 'none' }}
+                            /> : <Skeleton animation='wave' height={100} width={80} variant='rectangular'>
+                                <img
+                                    src={process.env.REACT_APP_API_UPLOADURL + item.img}
+                                    alt=""
+                                    onClick={() => navigate(`/product/${item.id}`)}
+                                    loading="lazy"
+                                    onLoad={handleImageLoading}
+                                    onError={handleImageLoading}
+                                // style={{ display: imageLoading ? 'block' : 'none' }}
+                                />
+                            </Skeleton>
+                        }
+                        <div className="details">
+                            {imageLoading
+                                ? <h1>{item.title}</h1>
+                                : <Skeleton variant="text" sx={{ fontSize: '2.5rem' }} width="60%" />
 
-                    <div style={{ display: imageLoading ? 'none' : 'block' }}>
-                        <Loading
-                            height={'100px'}
-                            width={'80px'}
-                            color={'#000'}
-                            loadingHeight={'18px'}
-                            loadingWidth={'18px'}
-                        />
-                    </div>
+                            }
+
+                            {imageLoading
+                                ? <p>{item.desc?.substring(0, 100)}</p>
+                                : <Skeleton variant="text" sx={{ fontSize: '1.5rem' }} width="100%" >
+                                    <p>{item.desc?.substring(0, 100)}</p>
+                                </Skeleton>
+                            }
+
+                            {imageLoading
+                                ? <p className="price">
+                                    {item.quantity} x {unitPrice(item.price)}
+                                </p>
+                                : <Skeleton variant="text" sx={{ fontSize: '1.5rem' }} width="70%" />
+                            }
+
+                            <div className="quantity">
+                                {imageLoading
+                                    ? <button
+                                        onClick={(e) => dispatch(updateQuantity({
+                                            id: item.id,
+                                            quantity: item.quantity === 1 ? 1 : item.quantity - 1
+                                        }))}
+                                    >
+                                        -
+                                    </button>
+                                    : <Skeleton animation='wave'>
+                                        <button
+                                            onClick={(e) => dispatch(updateQuantity({
+                                                id: item.id,
+                                                quantity: item.quantity === 1 ? 1 : item.quantity - 1
+                                            }))}
+                                        >
+                                            -
+                                        </button>
+                                    </Skeleton>
+                                }
+
+                                {imageLoading
+                                    ? item.quantity
+                                    : <Skeleton animation='wave'>
+
+                                    </Skeleton>
+                                }
 
 
-                    <img
-                        src={process.env.REACT_APP_API_UPLOADURL + item.img}
-                        alt=""
-                        onClick={() => navigate(`/product/${item.id}`)}
-                        loading="lazy"
-                        onLoad={handleImageLoading}
-                        onError={handleImageLoading}
-                        style={{ display: imageLoading ? 'block' : 'none' }}
-                    />
+                                {imageLoading
+                                    ? <button onClick={(e) => dispatch(updateQuantity({
+                                        id: item.id,
+                                        quantity: item.quantity + 1
+                                    }))}
+                                    >
+                                        +
+                                    </button>
+                                    : <Skeleton animation='wave'>
+                                        <button onClick={(e) => dispatch(updateQuantity({
+                                            id: item.id,
+                                            quantity: item.quantity + 1
+                                        }))}
+                                        >
+                                            +
+                                        </button>
+                                    </Skeleton>
+                                }
 
-                    <div className="details">
-                        <h1>{item.title}</h1>
-                        <p>{item.desc?.substring(0, 100)}</p>
-                        <p className="price">
-                            {item.quantity} x {unitPrice(item.price)}
-                        </p>
-                        <div className="quantity">
-                            <button
-                                onClick={(e) => dispatch(updateQuantity({
-                                    id: item.id,
-                                    quantity: item.quantity === 1 ? 1 : item.quantity - 1
-                                }))}
-                            >
-                                -
-                            </button>
-                            {item.quantity}
-                            <button onClick={(e) => dispatch(updateQuantity({
-                                id: item.id,
-                                quantity: item.quantity + 1
-                            }))}
-                            >
-                                +
-                            </button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="delete" onClick={() => dispatch(removeToCart(
-                        { id: item.id }
-                    ))}>
-                        <DeleteOutlineIcon />
+                        {imageLoading
+                            ? <div className="delete" onClick={() => dispatch(removeToCart(
+                                { id: item.id }
+                            ))}>
+                                <DeleteOutlineIcon />
+                            </div>
+                            : <Skeleton animation='wave' height={28} width={24} variant='rounded'>
+                                <div className="delete" onClick={() => dispatch(removeToCart(
+                                    { id: item.id }
+                                ))}>
+                                    <DeleteOutlineIcon />
+                                </div>
+                            </Skeleton>
+                        }
+
+
                     </div>
-                </div>
-            ))
-            }
+                ))
+                }
+            </div>
+
             <hr />
             <div className="total">
                 <p>SUBTOTAL</p>
-                <p className='totalPrice'>{unitPrice(totalPrice)}</p>
+                {imageLoading
+                    ? <p className='totalPrice'>{unitPrice(totalPrice)}</p>
+                    : <Skeleton animation='wave'>
+                        <p className='totalPrice'>{unitPrice(totalPrice)}</p>
+                    </Skeleton>
+                }
+
+
             </div>
 
             <div className="checkout">

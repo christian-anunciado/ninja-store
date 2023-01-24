@@ -33,6 +33,8 @@ function Product() {
         }))
     }
 
+    console.log(data);
+
     return (
         <div className="product">
             {loading
@@ -81,9 +83,28 @@ function Product() {
                         </div>
 
                         <div className="info">
-                            <span>Vendor: Polo</span>
-                            <span>Product Type: T-Shirt</span>
-                            <span>Tag: T-Shirt, Women, Top</span>
+                            <span>Vendor: Ninja Store</span>
+                            <span>Product Type:
+                                <span className="capitalize"> {data.data.attributes.subcategories
+                                    .data[0].attributes.title}
+                                </span>
+                            </span>
+                            <span>Tag:
+                                <span className="capitalize">
+                                    {data.data.attributes.categories.data.map(
+                                        (cat, index) => {
+                                            if (index === 0) {
+                                                return " " + cat.attributes.title
+                                            } else {
+                                                return ", " + cat.attributes.title
+                                            }
+                                        }
+                                    )}
+
+                                </span>
+
+
+                            </span>
 
                         </div>
 
