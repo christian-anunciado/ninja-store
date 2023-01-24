@@ -58,7 +58,7 @@
 
         .details {
             h1 {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 font-weight: 500;
             }
 
@@ -67,6 +67,17 @@
                 color: gray;
                 font-size: 0.8rem;
                 margin-bottom: 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 200px;
+                line-height: 1.2;
+                word-wrap: break-word;
+                line-clamp: 2;
+                -webkit-line-clamp: 2;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+
+
             }
 
             .price {
@@ -129,5 +140,24 @@
             font-weight: 500;
             cursor: pointer;
         }
+    }
+}
+
+.item-container {
+    max-height: 490px;
+    overflow: auto;
+
+    &::-webkit-scrollbar-track {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-button {}
+
+    &::-webkit-scrollbar {
+        width: 0;
     }
 }

@@ -21,9 +21,44 @@
 
     .bottom {
         margin-top: 50px;
-        display: flex;
-        gap: 50px;
-        justify-content: center;
-        align-items: center;
+        margin: auto;
+        // display: flex;
+        // gap: 50px;
+        // justify-content: center;
+        // align-items: center;
+    }
+}
+
+
+.slick-slide>div {
+    display: grid;
+    place-items: center;
+}
+
+.slick-slide {
+    margin-top: 40px;
+}
+
+
+.slides {
+    position: relative;
+
+    .slick-prev,
+    .slick-next {
+        position: absolute;
+        top: 50%;
+    }
+
+    .slick-prev {
+
+        &::before {
+            color: rgba(128, 128, 128, 0.7);
+        }
+    }
+
+    .slick-next {
+        &::before {
+            color: rgba(128, 128, 128, 0.7);
+        }
     }
 }

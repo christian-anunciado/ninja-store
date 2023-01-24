@@ -9,6 +9,8 @@ import Home from "./pages/Home/Home";
 import Product from "./pages/Product/Product";
 import Products from "./pages/Products/Products";
 import "./App.scss"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from "./hooks/ScrollToTop";
 
 const Layout = () => {
