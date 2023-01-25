@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import List from '../../components/List/List'
+import Loading from '../../components/Loading/Loading'
 import useFetch from '../../hooks/useFetch'
 import "./Products.scss"
 
@@ -11,6 +12,7 @@ function Products() {
     const [price, setPrice] = useState(1000)
     const [sort, setSort] = useState('asc')
     const [subCat, setSubCat] = useState([])
+    const [fetch, setFetch] = useState(null)
 
 
     const { data, loading, error } = useFetch(`/subcategories?filters[categories][title][$eqi]=${catID}`)
@@ -25,13 +27,19 @@ function Products() {
         )
     }
 
+    useEffect(() => {
+        setFetch(
+            `/products?populate=*&filters[categories][title]=${catID}${subCat.map(item => `&filters[subcategories][id][$eq]=${item}`)}&filters[price][$lte]=${price}&sort=price:${sort}`
+        )
+    }, [price, sort, subCat])
+
     return (
         <div className="products">
             <div className="left">
                 <div className="filterItem">
                     <h2>{catID} Categories</h2>
                     {loading
-                        ? "Loading"
+                        ? <Loading color={'black'} height={'150px'} width={'150px'} loadingHeight={'24px'} loadingWidth={'24px'} />
                         : data?.data?.map(item => (
                             <div className="inputItem" key={item.id}>
                                 <input type="checkbox" id={item.id} name='category'
@@ -80,7 +88,7 @@ function Products() {
             <div className="right">
                 <img src="https://images.pexels.com/photos/395196/pexels-photo-395196.jpeg?auto=compress&cs=tinysrgb&w=1600&dpr=1" alt="" className='catImg' />
 
-                <List catID={catID} price={price} sort={sort} subCat={subCat} />
+                <List fetch={fetch} />
             </div>
         </div>
     )

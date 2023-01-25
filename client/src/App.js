@@ -12,6 +12,7 @@ import "./App.scss"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from "./hooks/ScrollToTop";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 const Layout = () => {
   return (
@@ -40,6 +41,10 @@ const route = createBrowserRouter([
       {
         path: "/product/:id",
         element: <Product />
+      },
+      {
+        path: "/search_products/:name",
+        element: <SearchPage />
       }
     ]
   }

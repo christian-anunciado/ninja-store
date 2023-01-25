@@ -9,6 +9,8 @@ import useFetch from '../../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/cartRedux';
 import { CurrencyContext } from '../../context/currencyContext';
+import { Skeleton } from '@mui/material';
+import Loading from '../../components/Loading/Loading';
 
 function Product() {
 
@@ -33,12 +35,12 @@ function Product() {
         }))
     }
 
-    console.log(data);
-
     return (
         <div className="product">
             {loading
-                ? "Loading"
+                ? <>
+                    <Loading color={'black'} height={'60vh'} width={'100%'} loadingHeight={'32px'} loadingWidth={'32px'} />
+                </>
                 : <>
                     <div className="left">
                         <div className="images">

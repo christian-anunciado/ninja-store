@@ -4,6 +4,7 @@ import useFetch from '../../hooks/useFetch'
 import Slider from "react-slick";
 
 import "./FeaturedProducts.scss"
+import Loading from '../Loading/Loading';
 
 
 function FeaturedProducts({ type, msg }) {
@@ -31,8 +32,9 @@ function FeaturedProducts({ type, msg }) {
             </div>
             <div className="bottom">
                 {error ? 'Something went wrong!' :
-                    loading ? 'Loading' :
-                        <Slider {...settings}>
+                    loading
+                        ? <Loading color={'black'} height={'200px'} width={'100%'} loadingHeight={'32px'} loadingWidth={'32px'} />
+                        : <Slider {...settings}>
 
                             {data.data?.map((item, index) =>
                                 <Card item={item.attributes} key={item.id} id={item.id} />

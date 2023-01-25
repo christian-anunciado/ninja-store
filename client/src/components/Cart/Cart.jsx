@@ -43,7 +43,6 @@ function Cart({ setToggle, handlerRef }) {
     }
 
     useEffect(() => {
-        console.log(imageLoaded === products.length);
         if (imageLoaded === products.length) {
             setImageLoading(true)
         }

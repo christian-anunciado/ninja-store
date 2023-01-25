@@ -3,37 +3,76 @@
     position: relative;
     align-items: center;
     justify-content: center;
+    transition: all 0.4s;
 
 
-    input {
+    .search-input {
         border-radius: 4px;
-        animation: sampleTest .3s both;
+        animation: sampleTest .3s linear;
         width: 100%;
-        padding: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        outline: 1px solid gray;
+        // position: relative;
 
-        &::placeholder {
+        .icon {
+
+            position: absolute;
+            right: 0%;
             color: gray;
-            font-weight: normal;
+            animation: asd 0.2s linear forwards 0.1s;
+            opacity: 1;
+
         }
 
-        &::-webkit-search-cancel-button {
-            -webkit-appearance: none;
-            background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
-            background-size: contain;
-            opacity: 1;
-            pointer-events: none;
+        input {
+            outline: none;
+            border: none;
+            padding: 2px;
+            margin-left: 6px;
+
+            &::placeholder {
+                animation: asd 0.8s linear forwards;
+                color: gray;
+                font-weight: normal;
+            }
         }
+    }
+
+    .search-icon {
+        transition: all 2s;
+    }
+
+    .search-input-reverse {
+        animation: sampleTest .3s linear;
+        animation-direction: reverse;
     }
 }
 
 @keyframes sampleTest {
     0% {
-        width: 10%;
+        width: 50%;
         opacity: 0;
     }
 
     100% {
         width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes asd {
+    // 0% {
+    //     opacity: 0;
+    //     // height: 25px;
+    //     // width: 25px;
+    // }
+
+    100% {
+        height: 18px;
+        width: 18px;
+        padding: 2px 4px;
         opacity: 1;
     }
 }
