@@ -3,21 +3,18 @@
     position: relative;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s;
-
+    position: relative;
 
     .search-input {
         border-radius: 4px;
-        animation: sampleTest .3s linear;
-        width: 100%;
+        animation: sampleTest .3s linear forwards;
         display: flex;
         justify-content: space-between;
         align-items: center;
         outline: 1px solid gray;
-        // position: relative;
+        border: none;
 
         .icon {
-
             position: absolute;
             right: 0%;
             color: gray;
@@ -26,14 +23,18 @@
 
         }
 
+        .icon-reverse {
+            display: none;
+        }
+
         input {
             outline: none;
             border: none;
             padding: 2px;
             margin-left: 6px;
+            animation: sampleTest .3s linear forwards;
 
             &::placeholder {
-                animation: asd 0.8s linear forwards;
                 color: gray;
                 font-weight: normal;
             }
@@ -41,18 +42,35 @@
     }
 
     .search-icon {
-        transition: all 2s;
+        animation: fade 875ms linear forwards -600ms;
+        position: absolute;
+        right: 0;
     }
 
-    .search-input-reverse {
+    .reverse {
         animation: sampleTest .3s linear;
         animation-direction: reverse;
     }
 }
 
+@keyframes fade {
+    55% {
+        opacity: 0;
+        height: 18px;
+        width: 18px;
+        padding: 2px 4px;
+
+    }
+
+    100% {
+        opacity: 1;
+        padding: 0;
+    }
+}
+
 @keyframes sampleTest {
     0% {
-        width: 50%;
+        width: 0%;
         opacity: 0;
     }
 
@@ -63,11 +81,6 @@
 }
 
 @keyframes asd {
-    // 0% {
-    //     opacity: 0;
-    //     // height: 25px;
-    //     // width: 25px;
-    // }
 
     100% {
         height: 18px;

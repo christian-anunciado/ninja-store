@@ -5,4 +5,37 @@
     width: 100%;
     gap: 30px;
     justify-content: space-between;
+
+    @media (max-height: 760px) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+}
+
+.no-result {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+    }
+
+    span {
+        font-weight: 800;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-weight: normal;
+        color: gray;
+        font-size: 0.725rem;
+        margin-bottom: 8px;
+    }
+
 }

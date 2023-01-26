@@ -1,0 +1,53 @@
+.search-result {
+    display: flex;
+    padding: 40px 50px;
+
+    .left {
+        flex: 1;
+        position: sticky;
+        height: 100%;
+        top: 80px;
+
+        .filterItem {
+            margin-bottom: 30px;
+
+            h2 {
+                font-weight: 400;
+                margin-bottom: 20px;
+                text-transform: capitalize;
+            }
+
+        }
+
+        .inputItem {
+            margin-bottom: 10px;
+
+            label {
+                margin-left: 10px;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+
+    .right {
+        flex: 3;
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+
+            .result-tip {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                span {
+                    color: #F45984;
+                    font-weight: 800;
+                }
+            }
+        }
+    }
+}
