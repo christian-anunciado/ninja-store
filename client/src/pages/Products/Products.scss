@@ -37,6 +37,10 @@
             height: 300px;
             object-fit: cover;
             margin-bottom: 50px;
+
+            @media (max-height: 760px) {
+                height: 200px;
+            }
         }
     }
 }

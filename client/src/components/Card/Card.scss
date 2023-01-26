@@ -1,17 +1,26 @@
 .card {
-    width: 260px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
     margin-bottom: 50px;
 
+    @media (max-height: 760px) {
+        width: 200px;
+    }
+
     .image {
         width: 100%;
-        height: 400px;
+        height: 360px;
         overflow: hidden;
         position: relative;
         cursor: pointer;
+
+        @media (max-height: 760px) {
+            height: 300px;
+        }
+
 
         &:hover {
             .secondImg {
@@ -56,14 +65,16 @@
         h3 {
             font-size: 18px;
             font-weight: 700;
+            color: #F45984;
+
         }
 
         .oldPrice {
             color: gray;
             font-weight: 400;
             text-decoration: line-through;
-            text-decoration-color: #D2001A;
-            text-decoration-thickness: 2px;
+            text-decoration-color: rgb(41, 40, 41, .8);
+            text-decoration-thickness: 1.9px;
         }
     }
 }
