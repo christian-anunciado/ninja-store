@@ -144,8 +144,12 @@
 }
 
 .item-container {
-    max-height: 490px;
+    max-height: 370px;
     overflow: auto;
+
+    @media (max-height: 760px) {
+        max-height: 240px;
+    }
 
     &::-webkit-scrollbar-track {
         display: none;

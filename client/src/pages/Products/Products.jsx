@@ -1,3 +1,4 @@
+import { Pagination } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import FilterProducts from '../../components/FilterProducts/FilterProducts'
@@ -14,6 +15,7 @@ function Products() {
     const [sort, setSort] = useState('asc')
     const [subCat, setSubCat] = useState([])
     const [fetch, setFetch] = useState(null)
+    const [page, setPage] = useState(1)
 
     const { data, loading, error } = useFetch(
         fetch
@@ -22,9 +24,9 @@ function Products() {
 
     useEffect(() => {
         setFetch(
-            `/products?populate=*&filters[categories][title]=${catID}${subCat.map(item => `&filters[subcategories][id][$eq]=${item}`)}&filters[price][$lte]=${price}&sort=price:${sort}`
+            `/products?populate=*&filters[$or][0][categories][title]=${catID}&filters[$or][1][isNew]=true${subCat.map(item => `&filters[subcategories][id][$eq]=${item}`)}&filters[price][$lte]=${price}&sort=price:${sort}&pagination[page]=${page}&pagination[pageSize]=6`
         )
-    }, [price, sort, subCat])
+    }, [price, sort, subCat, page, catID])
 
 
 
@@ -51,7 +53,29 @@ function Products() {
             <div className="right">
                 <img src="https://images.pexels.com/photos/395196/pexels-photo-395196.jpeg?auto=compress&cs=tinysrgb&w=1600&dpr=1" alt="" className='catImg' />
 
+                <div className="top-pagination">
+                    <Pagination
+                        count={data?.meta?.pagination?.pageCount}
+                        defaultPage={1}
+                        page={page}
+                        size={'small'}
+                        onChange={(e, value) => setPage(value)}
+                    />
+                </div>
+
                 <List data={data} loading={loading} />
+
+                <div className="bottom-pagination">
+                    <Pagination
+                        count={data?.meta?.pagination?.pageCount}
+                        defaultPage={1}
+                        page={page}
+                        size={'medium'}
+                        onChange={(e, value) => setPage(value)}
+                        variant="outlined"
+                        shape="rounded"
+                    />
+                </div>
             </div>
         </div>
     )

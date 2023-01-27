@@ -12,6 +12,9 @@ function Search() {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
+            if (searchedProduct.length === 0) {
+                return
+            }
             nav(`/search_products/${searchedProduct}`)
         }
     }
