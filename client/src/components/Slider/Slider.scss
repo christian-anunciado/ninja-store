@@ -35,16 +35,17 @@
 
         .icon {
             cursor: pointer;
-            width: min-content;
-            height: min-content;
+            width: 20px;
+            height: 20px;
             border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: gray;
+            color: rgba(128, 128, 128, 0.8);
 
             &:hover {
-                background-color: rgba(0, 0, 0, 0.4);
+                background-color: rgba(0, 0, 0, 0.3);
+                color: white;
             }
         }
     }

@@ -11,6 +11,7 @@ import {
     REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import favoritesRedux from './favoritesRedux'
 
 const persistConfig = {
     key: 'root',
@@ -18,10 +19,11 @@ const persistConfig = {
     storage,
 }
 
-const persistedReducer = persistReducer(persistConfig, cartRedux)
+const cartReducer = persistReducer(persistConfig, cartRedux)
+const favoritesReducer = persistReducer(persistConfig, favoritesRedux)
 
 export const store = configureStore({
-    reducer: { cart: persistedReducer },
+    reducer: { cart: cartReducer, favorites: favoritesReducer },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
