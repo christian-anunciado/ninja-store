@@ -1,16 +1,17 @@
 import React, { useContext, useState } from 'react'
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import BalanceIcon from '@mui/icons-material/Balance';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import "./Product.scss"
 import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/cartRedux';
 import { CurrencyContext } from '../../context/currencyContext';
-import { Skeleton } from '@mui/material';
 import Loading from '../../components/Loading/Loading';
+import { addToFavorites } from '../../redux/favoritesRedux';
+import useIfItemAdded from '../../hooks/useIfItemAdded';
 
 function Product() {
 
@@ -20,11 +21,14 @@ function Product() {
     const { unitPrice } = useContext(CurrencyContext)
 
     const { data, loading, error } = useFetch(`/products/${prodID}?populate=*`)
-
+    const favorites = useSelector(state => state.favorites.products)
+    const products = useSelector(state => state.cart.products)
     const dispatch = useDispatch()
 
+    const addedToFavorites = useIfItemAdded(favorites, prodID)
+    const addedToCart = useIfItemAdded(products, prodID)
 
-    const handleAdd = () => {
+    const handleAddToCart = () => {
         dispatch(addToCart({
             id: data.data.id,
             title: data.data.attributes.title,
@@ -32,6 +36,16 @@ function Product() {
             price: data.data.attributes.price,
             img: data.data.attributes.img.data.attributes.url,
             quantity
+        }))
+    }
+
+    const handleAddToFavorites = () => {
+        dispatch(addToFavorites({
+            id: data.data.id,
+            title: data.data.attributes.title,
+            desc: data.data.attributes.desc,
+            price: data.data.attributes.price,
+            img: data.data.attributes.img.data.attributes.url,
         }))
     }
 
@@ -70,18 +84,34 @@ function Product() {
                             <button onClick={(e) => setQuantity(prev => prev + 1)}>+</button>
                         </div>
 
-                        <button className='add' onClick={handleAdd}>
-                            <AddShoppingCartIcon /> ADD TO CART
+                        <button className='add' onClick={handleAddToCart}>
+                            {addedToCart
+                                ? <>
+                                    <ShoppingCartIcon />
+                                    ADDED TO CART
+                                </>
+                                : <>
+                                    <ShoppingCartOutlinedIcon />
+                                    ADD TO CART
+                                </>
+                            }
                         </button>
 
                         <div className="buttons">
-                            <div className="items">
-                                <FavoriteBorderIcon /> ADD TO WISH LIST
+                            <div className="items" onClick={handleAddToFavorites}>
+                                {addedToFavorites
+                                    ? <>
+                                        <FavoriteIcon /> ADDED TO WISH LIST
+                                    </>
+                                    : <>
+                                        <FavoriteBorderIcon /> ADD TO WISH LIST
+                                    </>
+                                }
                             </div>
 
-                            <div className="items">
+                            {/* <div className="items">
                                 <BalanceIcon /> ADD TO COMPARE
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="info">

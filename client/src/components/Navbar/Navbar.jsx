@@ -11,12 +11,15 @@ import { Menu, MenuItem } from '@mui/material';
 import { useContext } from 'react';
 import { CurrencyContext } from '../../context/currencyContext';
 import Search from '../Search/Search';
+import Favorites from '../Favorites/Favorites';
 
 
 function Navbar() {
     const [openCart, setOpenCart] = useState(false)
+    const [openFavorites, setOpenFavorites] = useState(false)
 
     const handlerRef = useRef(null)
+    const favoritesRef = useRef(null)
 
     const products = useSelector(state => state.cart.products)
 
@@ -118,8 +121,7 @@ function Navbar() {
                 <div className="right">
                     <div className="icons">
                         <Search />
-                        <PersonOutlineIcon />
-                        <FavoriteIcon />
+                        <FavoriteIcon onClick={() => setOpenFavorites(!openFavorites)} ref={favoritesRef} />
                         <div className="cartIcon" onClick={() => setOpenCart(!openCart)} ref={handlerRef}>
                             <ShoppingCartIcon />
                             <span>{products.length}</span>
@@ -131,6 +133,7 @@ function Navbar() {
             </div>
 
             {openCart && <Cart setToggle={setOpenCart} handlerRef={handlerRef} />}
+            {openFavorites && <Favorites setToggle={setOpenFavorites} handlerRef={favoritesRef} />}
         </div>
     )
 }
