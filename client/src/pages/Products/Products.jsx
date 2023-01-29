@@ -24,7 +24,7 @@ function Products() {
 
     useEffect(() => {
         setFetch(
-            `/products?populate=*&filters[$or][0][categories][title]=${catID}&filters[$or][1][isNew]=true${subCat.map(item => `&filters[subcategories][id][$eq]=${item}`)}&filters[price][$lte]=${price}&sort=price:${sort}&pagination[page]=${page}&pagination[pageSize]=6`
+            `/products?populate=*&filters[$or][0][categories][title]=${catID}${subCat.map(item => `&filters[subcategories][id][$eq]=${item}`)}&filters[price][$lte]=${price}&sort=price:${sort}&pagination[page]=${page}&pagination[pageSize]=6`
         )
     }, [price, sort, subCat, page, catID])
 
