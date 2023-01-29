@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import CurrencyProvider from './context/currencyContext';
+import ToastWrapper from './components/ToastWrapper/ToastWrapper';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
       <PersistGate loading={"Loading"} persistor={persistor}>
         <CurrencyProvider>
           <App />
+          <ToastWrapper />
         </CurrencyProvider>
       </PersistGate>
     </Provider>

@@ -1,4 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 
 export const favoritesSlice = createSlice({
     name: 'favorites',
@@ -11,13 +12,16 @@ export const favoritesSlice = createSlice({
 
             if (!item) {
                 state.products = [...state.products, action.payload]
+                toast.success("Added to Wishlist")
             }
         },
         removeToFavorites: (state, action) => {
             state.products = state.products.filter(item => item.id !== action.payload.id)
+            toast.info("Removed from Wishlist")
         },
         resetFavorites: (state, action) => {
             state.products = []
+            toast.info("Wishlist cleared")
         },
     },
 })
