@@ -22,7 +22,7 @@ function SearchPage() {
 
     useEffect(() => {
         setFetch(
-            `/products?populate=*&filters[$or][0][title][$containsi]=${name}&filters[$or][1][categories][title][$containsi]=${name}&filters[$or][2][subcategories][title][$containsi]=${name}&filters[price][$lte]=${price}&sort=price:${sort}&pagination[page]=${page}&pagination[pageSize]=6`
+            `/products?populate=*&filters[$or][0][title][$containsi]=${name}&filters[$or][1][categories][title][$containsi]=${name}&filters[$or][2][subcategories][title][$containsi]=${name}&filters[price][$lte]=${price}&sort=price:${sort}&pagination[page]=${page}&pagination[pageSize]=12`
         )
         window.scrollTo(0, 0);
 
