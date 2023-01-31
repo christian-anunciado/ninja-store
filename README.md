@@ -9,7 +9,7 @@
 <!-- [![Ninja-Store.gif](https://s9.gifyu.com/images/Ninja-Store.gif)](https://gifyu.com/image/SmCQz) -->
 <img alt="Ninja-Store.gif" src="./Ninja Store.gif" width="100%"/>
 
-> Ninja Store is an online shopping platform that offers a wide range of fashionable and stylish products for women. From shoes to accessories, you can find everything you need to elevate your style and complete your wardrobe. With its user-friendly interface, you can easily navigate through the website and find the products you are looking for with ease. The products are carefully curated and are of the highest quality, ensuring that you always look and feel your best. Additionally, the website offers competitive pricing and regular sales, making it easy for you to stay on trend without breaking the bank. Whether you are looking for the latest fashion finds or seeking timeless classics, Ninja Store has you covered.
+> Ninja Store is an online shopping platform that offers a wide range of fashionable and stylish products. From shoes to accessories, you can find everything you need to elevate your style and complete your wardrobe. With its user-friendly interface, you can easily navigate through the website and find the products you are looking for with ease. The products are carefully curated and are of the highest quality, ensuring that you always look and feel your best. Additionally, the website offers competitive pricing and regular sales, making it easy for you to stay on trend without breaking the bank. Whether you are looking for the latest fashion finds or seeking timeless classics, Ninja Store has you covered.
 
 <!-- ### ✨ [Demo](https://s9.gifyu.com/images/Ninja-Store.gif) -->
 
